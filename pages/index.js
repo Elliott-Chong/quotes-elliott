@@ -8,10 +8,13 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import loading_datas from "../loading_data";
 import { useGlobalContext } from "../context";
 import Link from "next/link";
 
 export default function Home() {
+  const loading_data = loading_datas[Math.floor(Math.random() * 1)];
+
   const { state, dispatch } = useGlobalContext();
   const { user } = state;
   React.useEffect(() => {
@@ -49,18 +52,12 @@ export default function Home() {
     <main className="min-h-screen bg-slate-800 flex flex-col justify-center items-center md:px-[25vw] px-[5vw]">
       <div className="flex flex-col gap-4 md:gap-8 items-start">
         <div className="p-10 bg-slate-300 shadow-2xl flex flex-col gap-4 ring-1">
-          {quote ? (
-            <>
-              <h1 className="font-dmserif text-2xl md:text-4xl ">
-                {quote?.content}
-              </h1>
-              <span className="font-dmserif text-xl md:text-2xl font-[400]">
-                - {quote?.author}
-              </span>
-            </>
-          ) : (
-            <h1 className="font-dmserif text-2xl md:text-4xl">loading...</h1>
-          )}
+          <h1 className="font-dmserif text-2xl md:text-4xl ">
+            {quote ? quote.content : loading_data.content}
+          </h1>
+          <span className="font-dmserif text-xl md:text-2xl font-[400]">
+            - {quote ? quote.author : loading_data.author}
+          </span>
         </div>
         <div className="flex gap-4">
           {!user ? (
@@ -69,14 +66,14 @@ export default function Home() {
                 e.preventDefault();
                 signInWithGoogle();
               }}
-              className="py-2 px-4 text-base md:text-xl hover:-translate-y-1 text-white shadow-2xl border-2 hover:bg-white hover:text-slate-800 transition-all border-white font-dmserif"
+              className="py-2 flex justify-center items-center px-4 text-base md:text-xl hover:-translate-y-1 text-white shadow-2xl border-2 hover:bg-white hover:text-slate-800 transition-all border-white font-dmserif"
             >
               Sign in
             </button>
           ) : (
             <>
               <Link href="/saved">
-                <a className="py-2 px-4 text-base md:text-xl hover:-translate-y-1 text-white shadow-2xl border-2 hover:bg-white hover:text-slate-800 transition-all border-white font-dmserif">
+                <a className="py-2 flex justify-center items-center px-4 text-base md:text-xl hover:-translate-y-1 text-white shadow-2xl border-2 hover:bg-white hover:text-slate-800 transition-all border-white font-dmserif">
                   {user?.displayName}
                 </a>
               </Link>
@@ -84,7 +81,7 @@ export default function Home() {
                 onClick={(e) => {
                   e.preventDefault();
                 }}
-                className="py-2 px-4 text-base md:text-xl hover:-translate-y-1 text-white shadow-2xl border-2 hover:bg-white hover:text-slate-800 transition-all border-white font-dmserif"
+                className="py-2 flex justify-center items-center px-4 text-base md:text-xl hover:-translate-y-1 text-white shadow-2xl border-2 hover:bg-white hover:text-slate-800 transition-all border-white font-dmserif"
               >
                 <BookmarkIcon className="w-7" />
               </button>
