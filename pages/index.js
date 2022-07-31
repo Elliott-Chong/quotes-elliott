@@ -4,7 +4,6 @@ import { BookmarkIcon } from "@heroicons/react/outline";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
-  signOut,
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../firebase";
