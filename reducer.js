@@ -16,7 +16,7 @@ const reducer = (state, action) => {
           id: uid,
         },
       };
-    case "logout":
+    case "clear_user":
       return { ...state, user: null };
     default:
       return state;
